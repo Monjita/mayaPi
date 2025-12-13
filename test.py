@@ -138,8 +138,9 @@ def draw_digit(digit_matrix, x, y, size=12, color=WHITE):
                 )
 
 def draw_time():
-    now = datetime.datetime.now().strftime("%H:%M:%S")
-    x = 40
+    now = datetime.datetime.now().strftime("%H:%M")
+    # Centrar el reloj horizontalmente (ancho aproximado de HH:MM es 340px)
+    x = (WIDTH - 340) // 2
 
     for char in now:
         if char == ":":
@@ -149,12 +150,24 @@ def draw_time():
             draw_digit(DIGITS[char], x, 100, size=12, color=WHITE)
             x += 80  # Espaciado entre dígitos
 
+def draw_second_dot():
+    """Dibuja un punto que parpadea según los segundos (segundero)."""
+    current_second = datetime.datetime.now().second
+    
+    # Parpadea cada segundo (alternando entre visible y no visible)
+    if current_second % 2 == 0:  # Par = visible, Impar = invisible
+        dot_size = 8
+        dot_x = WIDTH - 15
+        dot_y = 10
+        pygame.draw.rect(screen, WHITE, pygame.Rect(dot_x, dot_y, dot_size, dot_size))
+
 def main():
     while True:
         screen.fill(BLACK)
         draw_time()
+        draw_second_dot()
         pygame.display.update()
-        time.sleep(0.5)
+        time.sleep(0.1)  # Mayor frecuencia para mejor precisión del parpadeo
 
 if __name__ == "__main__":
     main()
