@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="200"
+     height="120"
+     viewBox="0 0 200 120">
+
+  <!-- Parámetros del óvalo:
+       cx=100 cy=60 rx=80 ry=35 -->
+
+  <!-- Contorno -->
+  <ellipse
+    cx="100"
+    cy="60"
+    rx="80"
+    ry="35"
+    fill="none"
+    stroke="red"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Línea curva central (borde a borde) -->
+  <path
+    d="M20 60
+       Q100 98 180 60"
+    fill="none"
+    stroke="red"
+    stroke-width="6"
+    stroke-linecap="round"/>
+
+  <!-- Semicurvas verticales
+       calculadas matemáticamente -->
+
+  <!-- Izquierda -->
+  <path
+    d="M70 29.3
+       Q55 44.5 70 74"
+    fill="none"
+    stroke="red"
+    stroke-width="6"
+    stroke-linecap="round"/>
+
+  <!-- Centro -->
+  <path
+    d="M100 25
+       Q85 44.5 100 76"
+    fill="none"
+    stroke="red"
+    stroke-width="6"
+    stroke-linecap="round"/>
+
+  <!-- Derecha -->
+  <path
+    d="M130 29.3
+       Q115 44.5 130 74"
+    fill="none"
+    stroke="red"
+    stroke-width="6"
+    stroke-linecap="round"/>
+
+</svg>
