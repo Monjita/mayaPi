@@ -22,7 +22,7 @@ RED = (255, 0, 0)
 
 # Cargar imágenes PNG
 try:
-    imagen_cero = pygame.image.load("cero.png")
+    imagen_cero = pygame.image.load("cero_v2.png")
     imagen_cinco = pygame.image.load("cinco.png")
 except pygame.error as e:
     print(f"Error cargando imágenes: {e}")
