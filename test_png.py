@@ -20,36 +20,14 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
-# Matrices de números pixel art 5x7
-DIGITSMAYA = {
-    "0": [
-    "...111111111111111111111...",
-    "..1...1......1......1...1..",
-    ".1...1......1......1.....1.",
-    "1....1......1......1......1",
-    "1....1......1......1......1",
-    "11...1......1......1.....11",
-    "1.1...1......1......1...1.1",
-    "1..111111111111111111111..1",
-    "1.........................1",
-    "1.........................1",
-    ".1.......................1.",
-    "..1.....................1..",
-    "...111111111111111111111...",
-    ],
-    "1": [
-    "....1....",
-    "..11111..",
-    ".1111111.",
-    ".1111111.",
-    "111111111",
-    ".1111111.",
-    ".1111111.",
-    "..11111..",
-    "....1...."
-]
-
-}
+# Cargar imágenes PNG
+try:
+    imagen_cero = pygame.image.load("cero.png")
+    imagen_cinco = pygame.image.load("cinco.png")
+except pygame.error as e:
+    print(f"Error cargando imágenes: {e}")
+    imagen_cero = None
+    imagen_cinco = None
 
 
 def draw_digit(digit_matrix, x, y, size=12, color=WHITE):
@@ -73,8 +51,25 @@ def draw_digit(digit_matrix, x, y, size=12, color=WHITE):
                     )
                 )
 
+def scale_image_to_fit(image, max_width, max_height):
+    """Escala una imagen para que quepa dentro de un área manteniendo aspecto."""
+    if image is None:
+        return None
+    
+    img_width, img_height = image.get_size()
+    
+    # Calcular escala manteniendo aspecto
+    scale_x = max_width / img_width
+    scale_y = max_height / img_height
+    scale = min(scale_x, scale_y)
+    
+    new_width = int(img_width * scale)
+    new_height = int(img_height * scale)
+    
+    return pygame.transform.scale(image, (new_width, new_height))
+
 def draw_time():
-    """Dibuja el 0 de DIGITSMAYA en la primera mitad de la pantalla."""
+    """Dibuja cero.png en la primera mitad de la pantalla."""
     half_width = WIDTH // 2
     margin_x = 20
     
@@ -82,34 +77,18 @@ def draw_time():
     center_x = half_width // 2
     center_y = HEIGHT // 2
     
-    # Dibujar el 0 de DIGITSMAYA
-    digit_matrix = DIGITSMAYA["0"]
-    
-    # Calcular tamaño de píxel para que quepa en la mitad con márgenes
+    # Escalar imagen para que quepa en la mitad
     available_width = half_width - 2 * margin_x
     available_height = HEIGHT - 2 * margin_x
     
-    # Dimensiones del dígito
-    digit_width = len(digit_matrix[0])  # 23 píxeles
-    digit_height = len(digit_matrix)    # 13 píxeles
+    scaled_img = scale_image_to_fit(imagen_cero, available_width, available_height)
     
-    # Calcular tamaño del píxel
-    pixel_size_x = available_width / digit_width * 0.8
-    pixel_size_y = available_height / digit_height * 0.8
-    pixel_size = min(pixel_size_x, pixel_size_y)
-    
-    # Calcular posición para centrar
-    total_width = digit_width * pixel_size
-    total_height = digit_height * pixel_size
-    
-    x_pos = center_x - total_width // 2
-    y_pos = center_y - total_height // 2
-    
-    # Dibujar el dígito
-    draw_digit(digit_matrix, int(x_pos), int(y_pos), size=int(5), color=RED)
+    if scaled_img:
+        img_rect = scaled_img.get_rect(center=(center_x, center_y))
+        screen.blit(scaled_img, img_rect)
 
 def draw_second_image():
-    """Dibuja el 1 de DIGITSMAYA en la segunda mitad de la pantalla."""
+    """Dibuja cinco.png en la segunda mitad de la pantalla."""
     half_width = WIDTH // 2
     margin_x = 20
     
@@ -117,31 +96,15 @@ def draw_second_image():
     center_x = half_width + half_width // 2
     center_y = HEIGHT // 2
     
-    # Dibujar el 1 de DIGITSMAYA
-    digit_matrix = DIGITSMAYA["1"]
-    
-    # Calcular tamaño de píxel para que quepa en la mitad con márgenes
+    # Escalar imagen para que quepa en la mitad
     available_width = half_width - 2 * margin_x
     available_height = HEIGHT - 2 * margin_x
     
-    # Dimensiones del dígito
-    digit_width = len(digit_matrix[0])  # 10 píxeles
-    digit_height = len(digit_matrix)    # 9 píxeles
+    scaled_img = scale_image_to_fit(imagen_cinco, available_width, available_height)
     
-    # Calcular tamaño del píxel
-    pixel_size_x = available_width / digit_width * 0.8
-    pixel_size_y = available_height / digit_height * 0.8
-    pixel_size = min(pixel_size_x, pixel_size_y)
-    
-    # Calcular posición para centrar
-    total_width = digit_width * pixel_size
-    total_height = digit_height * pixel_size
-    
-    x_pos = center_x - total_width // 2
-    y_pos = center_y - total_height // 2
-    
-    # Dibujar el dígito
-    draw_digit(digit_matrix, int(x_pos), int(y_pos), size=int(1), color=RED)
+    if scaled_img:
+        img_rect = scaled_img.get_rect(center=(center_x, center_y))
+        screen.blit(scaled_img, img_rect)
 
 def draw_second_dot():
     """Dibuja un punto que parpadea según los segundos (segundero)."""
