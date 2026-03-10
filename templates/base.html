@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MayaPi{% endblock %}</title>
+
+    <!-- FontAwesome local -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/fontawesome.min.css') }}">
+    <!-- Tu CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    {% include 'partials/navbar.html' %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'partials/footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/vendor/fontawesome.min.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

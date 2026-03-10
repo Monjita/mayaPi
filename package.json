@@ -1,0 +1,16 @@
+{
+  "name": "mayapi",
+  "version": "1.0.0",
+  "description": "Reloj maya en raspberry pi zero 2 w + pygame",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node scripts/copy-vendor.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0"
+  }
+}
