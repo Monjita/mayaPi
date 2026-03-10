@@ -1,7 +1,86 @@
 {% extends 'base.html' %}
 
-{% block title %}Inicio — MayaPi{% endblock %}
+{% block title %}Reloj Maya — MayaPi{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/maya-numerals.css') }}">
+{% endblock %}
 
 {% block content %}
-    <h1><i class="fa-solid fa-rocket"></i> Hola desde MayaPi</h1>
+
+<!-- <div class="page-header">
+</div> -->
+
+<!-- Reloj principal -->
+<div class="card" style="">
+
+    <div class="maya-clock">
+        <div class="maya-clock__digits">
+
+            <!-- Horas -->
+            <div class="maya-digit mg-lg">
+                <div data-maya="0" id="d-h1"></div>
+                <div class="maya-digit__label">Horas ×5</div>
+            </div>
+            <div class="maya-digit mg-lg">
+                <div data-maya="0" id="d-h0"></div>
+                <div class="maya-digit__label">Horas</div>
+            </div>
+
+            <div class="maya-clock__separator">·</div>
+
+            <!-- Minutos -->
+            <div class="maya-digit mg-lg">
+                <div data-maya="0" id="d-m1"></div>
+                <div class="maya-digit__label">Min ×5</div>
+            </div>
+            <div class="maya-digit mg-lg">
+                <div data-maya="0" id="d-m0"></div>
+                <div class="maya-digit__label">Min</div>
+            </div>
+
+            <div class="maya-clock__separator">·</div>
+
+            <!-- Segundos -->
+            <div class="maya-digit mg-lg">
+                <div data-maya="0" id="d-s1"></div>
+                <div class="maya-digit__label">Seg ×5</div>
+            </div>
+            <div class="maya-digit mg-lg">
+                <div data-maya="0" id="d-s0"></div>
+                <div class="maya-digit__label">Seg</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/maya-numerals.js') }}"></script>
+<script>
+function updateClock() {
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
+
+    const ids = {
+        'h1': Math.floor(h / 5), 'h0': h % 5,
+        'm1': Math.floor(m / 5), 'm0': m % 5,
+        's1': Math.floor(s / 5), 's0': s % 5,
+    };
+
+    for (const [key, val] of Object.entries(ids)) {
+        const el = document.getElementById(`d-${key}`);
+        MayaNumerals.render(el, val);
+    }
+
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+</script>
 {% endblock %}

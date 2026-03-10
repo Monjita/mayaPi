@@ -6,23 +6,52 @@
     <title>{% block title %}MayaPi{% endblock %}</title>
 
     <!-- FontAwesome local -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/fontawesome.min.css') }}">
-    <!-- Tu CSS -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/fontawesome.min.css') }}"> -->
+     <script src="{{ url_for('static', filename='js/vendor/fontawesome.min.js') }}"></script>
+    <!-- Estilos principales -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     {% block head %}{% endblock %}
 </head>
 <body>
 
-    {% include 'partials/navbar.html' %}
+    <!-- ── Navbar ── -->
+    <nav class="navbar">
+        <a href="{{ url_for('index') }}" class="navbar__brand">
+            <!-- <div class="navbar__brand-icon">
+                <i class="fa-solid fa-circle-nodes"></i>
+            </div> -->
+            Maya<span>Pi</span>
+        </a>
 
-    <main>
+        <ul class="navbar__nav">
+            <li>
+                <a href="{{ url_for('index') }}"
+                   class="{% if request.endpoint == 'index' %}active{% endif %}">
+                    <i class="fa-solid fa-clock"></i> Reloj
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('config') }}"
+                   class="{% if request.endpoint == 'config' %}active{% endif %}">
+                    <i class="fa-solid fa-sliders"></i> Config
+                </a>
+            </li>
+        </ul>
+
+        <div class="navbar__actions">
+            <span class="badge badge--jade">
+                <i class="fa-solid fa-circle" style="font-size:0.5rem"></i> Online
+            </span>
+        </div>
+    </nav>
+
+    <!-- ── Contenido ── -->
+    <main class="main">
         {% block content %}{% endblock %}
     </main>
 
-    {% include 'partials/footer.html' %}
-
-    <script src="{{ url_for('static', filename='js/vendor/fontawesome.min.js') }}"></script>
+    <!-- Scripts -->
     {% block scripts %}{% endblock %}
 </body>
 </html>

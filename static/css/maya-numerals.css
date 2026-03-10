@@ -1,0 +1,91 @@
+/* ============================================================
+   maya-numerals.css
+   Glifos mayas (0-19) dibujados con CSS puro
+   ============================================================ */
+
+/* Contenedor del glifo */
+.mg {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+/* Fila de puntos */
+.mg__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Punto individual */
+.mg__dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-jade, #2ecc8f);
+  box-shadow: 0 0 6px rgba(46, 204, 143, 0.6);
+  flex-shrink: 0;
+}
+
+/* Barra horizontal */
+.mg__bar {
+  width: 100%;
+  min-width: 32px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent-jade, #2ecc8f);
+  box-shadow: 0 0 6px rgba(46, 204, 143, 0.4);
+}
+
+/* Cero — concha/óvalo */
+.mg__zero {
+  width: 22px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-jade, #2ecc8f);
+  background: transparent;
+  box-shadow: 0 0 8px rgba(46, 204, 143, 0.4);
+}
+
+/* ── Tamaños ─────────────────────────────────────────────────
+   Aplica la clase al contenedor padre del glifo, no al .mg
+   ─────────────────────────────────────────────────────────── */
+
+/* Pequeño — inline, labels */
+.mg-sm .mg__dot  { width: 5px;  height: 5px; }
+.mg-sm .mg__bar  { min-width: 20px; height: 3px; }
+.mg-sm .mg__zero { width: 14px; height: 9px; border-width: 2px; }
+.mg-sm .mg       { min-width: 22px; gap: 2px; }
+
+/* Mediano (default) — no necesita clase extra */
+
+/* Grande — display principal del reloj */
+.mg-lg .mg__dot  { width: 12px; height: 12px; gap: 6px; }
+.mg-lg .mg__bar  { min-width: 48px; height: 6px; }
+.mg-lg .mg__zero { width: 32px; height: 20px; border-width: 4px; }
+.mg-lg .mg       { min-width: 52px; gap: 5px; }
+.mg-lg .mg__dots { gap: 6px; }
+
+/* Extra grande */
+.mg-xl .mg__dot  { width: 16px; height: 16px; }
+.mg-xl .mg__bar  { min-width: 64px; height: 8px; }
+.mg-xl .mg__zero { width: 42px; height: 26px; border-width: 5px; }
+.mg-xl .mg       { min-width: 68px; gap: 7px; }
+.mg-xl .mg__dots { gap: 8px; }
+
+/* ── Variantes de color ──────────────────────────────────────
+   Sobrescribe el color del acento
+   ─────────────────────────────────────────────────────────── */
+.mg-amber .mg__dot,
+.mg-amber .mg__bar  { background: var(--accent-amber, #e8a020); box-shadow: 0 0 6px rgba(232,160,32,0.5); }
+.mg-amber .mg__zero { border-color: var(--accent-amber, #e8a020); box-shadow: 0 0 8px rgba(232,160,32,0.4); }
+
+.mg-red .mg__dot,
+.mg-red .mg__bar    { background: var(--accent-red, #c0392b); box-shadow: 0 0 6px rgba(192,57,43,0.5); }
+.mg-red .mg__zero   { border-color: var(--accent-red, #c0392b); }
