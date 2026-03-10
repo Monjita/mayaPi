@@ -1,20 +1,16 @@
 /**
  * maya-numerals.js
- * Dibuja numerales mayas (0-19) con CSS puro
- * Sin dependencias de fuentes externas
- *
- * Uso:
- *   <div class="maya-glyph" data-value="13"></div>
- *   MayaNumerals.render(element, 13)
- *   MayaNumerals.renderAll()
+ * Numerales mayas 0–59 en sistema posicional vigesimal
+ * 0–19  → 1 glifo
+ * 20–39 → 2 glifos apilados (1 arriba, resto abajo)
+ * 40–59 → 2 glifos apilados (2 arriba, resto abajo)
  */
 
 const MayaNumerals = (() => {
 
-  // 0-19: [barras, puntos]
-  // barra = 5, punto = 1
+  // [barras, puntos] para 0–19
   const GLYPHS = [
-    [0, 0], // 0  — concha (especial)
+    [0, 0], // 0
     [0, 1], // 1
     [0, 2], // 2
     [0, 3], // 3
@@ -36,21 +32,21 @@ const MayaNumerals = (() => {
     [3, 4], // 19
   ];
 
-  function buildGlyph(value) {
+  // Construye un glifo simple (0–19)
+  function buildSingle(value) {
     const n = Math.max(0, Math.min(19, Math.floor(value)));
     const [bars, dots] = GLYPHS[n];
-    const wrapper = document.createElement('div');
-    wrapper.className = 'mg';
+    const el = document.createElement('div');
+    el.className = 'mg__glyph';
 
     if (n === 0) {
-      // Símbolo especial para el cero: concha/óvalo
       const zero = document.createElement('div');
       zero.className = 'mg__zero';
-      wrapper.appendChild(zero);
-      return wrapper;
+      el.appendChild(zero);
+      return el;
     }
 
-    // Puntos encima
+    // Puntos
     if (dots > 0) {
       const dotsRow = document.createElement('div');
       dotsRow.className = 'mg__dots';
@@ -59,14 +55,48 @@ const MayaNumerals = (() => {
         dot.className = 'mg__dot';
         dotsRow.appendChild(dot);
       }
-      wrapper.appendChild(dotsRow);
+      el.appendChild(dotsRow);
     }
 
-    // Barras debajo
+    // Barras
     for (let i = 0; i < bars; i++) {
       const bar = document.createElement('div');
       bar.className = 'mg__bar';
-      wrapper.appendChild(bar);
+      el.appendChild(bar);
+    }
+
+    return el;
+  }
+
+  // Construye el contenedor completo para un valor 0–59
+  // Sistema posicional: upper = floor(value/20), lower = value % 20
+  function buildGlyph(value) {
+    const n = Math.max(0, Math.min(59, Math.floor(value)));
+    const upper = Math.floor(n / 20); // 0, 1 o 2
+    const lower = n % 20;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'mg';
+
+    if (upper === 0) {
+      // Solo 1 glifo
+      wrapper.appendChild(buildSingle(lower));
+    } else {
+      // 2 glifos apilados: upper arriba, lower abajo
+      // separados por una línea divisoria
+      const top = buildSingle(upper);
+      top.classList.add('mg__glyph--top');
+
+      const divider = document.createElement('div');
+      divider.className = 'mg__divider';
+
+      const bot = buildSingle(lower);
+      bot.classList.add('mg__glyph--bot');
+
+      wrapper.classList.add('mg--stacked');
+      wrapper.appendChild(top);
+      wrapper.appendChild(divider);
+      wrapper.appendChild(bot);
     }
 
     return wrapper;
@@ -87,5 +117,4 @@ const MayaNumerals = (() => {
   return { render, renderAll, buildGlyph };
 })();
 
-// Auto-inicializar al cargar el DOM
 document.addEventListener('DOMContentLoaded', MayaNumerals.renderAll);

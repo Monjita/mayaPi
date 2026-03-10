@@ -4,57 +4,88 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/maya-numerals.css') }}">
+<style>
+  /* Ajuste para pantalla 480×320 — sin scroll en el reloj */
+  .clock-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0 0.5rem;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
 
 <!-- <div class="page-header">
+    <div class="page-header__title">Reloj Maya</div>
+    <div class="page-header__subtitle">Numeración vigesimal maya · 480×320</div>
 </div> -->
 
-<!-- Reloj principal -->
-<div class="card" style="">
+<!-- ── Reloj principal ── -->
+<div class="card">
 
-    <div class="maya-clock">
-        <div class="maya-clock__digits">
+    <div class="clock-wrapper">
+        <div class="maya-clock">
+            <div class="maya-clock__digits">
 
-            <!-- Horas -->
-            <div class="maya-digit mg-lg">
-                <div data-maya="0" id="d-h1"></div>
-                <div class="maya-digit__label">Horas ×5</div>
+                <!-- Horas (0–23) -->
+                <div class="maya-digit">
+                    <div class="maya-digit__box">
+                        <div id="d-h"></div>
+                    </div>
+                    <div class="maya-digit__label">Horas</div>
+                </div>
+
+                <div class="maya-clock__sep">:</div>
+
+                <!-- Minutos (0–59) -->
+                <div class="maya-digit">
+                    <div class="maya-digit__box">
+                        <div id="d-m"></div>
+                    </div>
+                    <div class="maya-digit__label">Min</div>
+                </div>
+
+                <div class="maya-clock__sep">:</div>
+
+                <!-- Segundos (0–59) -->
+                <div class="maya-digit">
+                    <div class="maya-digit__box">
+                        <div id="d-s"></div>
+                    </div>
+                    <div class="maya-digit__label">Seg</div>
+                </div>
+
             </div>
-            <div class="maya-digit mg-lg">
-                <div data-maya="0" id="d-h0"></div>
-                <div class="maya-digit__label">Horas</div>
-            </div>
-
-            <div class="maya-clock__separator">·</div>
-
-            <!-- Minutos -->
-            <div class="maya-digit mg-lg">
-                <div data-maya="0" id="d-m1"></div>
-                <div class="maya-digit__label">Min ×5</div>
-            </div>
-            <div class="maya-digit mg-lg">
-                <div data-maya="0" id="d-m0"></div>
-                <div class="maya-digit__label">Min</div>
-            </div>
-
-            <div class="maya-clock__separator">·</div>
-
-            <!-- Segundos -->
-            <div class="maya-digit mg-lg">
-                <div data-maya="0" id="d-s1"></div>
-                <div class="maya-digit__label">Seg ×5</div>
-            </div>
-            <div class="maya-digit mg-lg">
-                <div data-maya="0" id="d-s0"></div>
-                <div class="maya-digit__label">Seg</div>
-            </div>
-
         </div>
     </div>
 </div>
 
+<!-- ── Stats ── -->
+<!-- <div class="grid grid--3" style="margin-top: 1.25rem;">
+    <div class="card">
+        <div class="card__title"><i class="fa-solid fa-calendar"></i> Cuenta Larga</div>
+        <div class="stat">
+            <div class="stat__value" id="maya-date" style="font-size:1.1rem">—</div>
+            <div class="stat__label">Fecha maya</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__title"><i class="fa-solid fa-sun"></i> Tzolkin</div>
+        <div class="stat">
+            <div class="stat__value stat__value--amber" id="tzolkin" style="font-size:1.1rem">—</div>
+            <div class="stat__label">Día ritual</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card__title"><i class="fa-solid fa-moon"></i> Haab</div>
+        <div class="stat">
+            <div class="stat__value stat__value--amber" id="haab" style="font-size:1.1rem">—</div>
+            <div class="stat__label">Día civil</div>
+        </div>
+    </div>
+</div> -->
 
 {% endblock %}
 
@@ -63,21 +94,36 @@
 <script>
 function updateClock() {
     const now = new Date();
-    const h = now.getHours();
-    const m = now.getMinutes();
-    const s = now.getSeconds();
 
-    const ids = {
-        'h1': Math.floor(h / 5), 'h0': h % 5,
-        'm1': Math.floor(m / 5), 'm0': m % 5,
-        's1': Math.floor(s / 5), 's0': s % 5,
-    };
+    // Actualiza cada unidad directamente (sin dividir en ×5)
+    MayaNumerals.render(document.getElementById('d-h'), now.getHours());
+    MayaNumerals.render(document.getElementById('d-m'), now.getMinutes());
+    MayaNumerals.render(document.getElementById('d-s'), now.getSeconds());
 
-    for (const [key, val] of Object.entries(ids)) {
-        const el = document.getElementById(`d-${key}`);
-        MayaNumerals.render(el, val);
-    }
+    // // ── Cuenta Larga ──
+    // const epoch = new Date(-3113, 8, 6);
+    // const days  = Math.floor((now - epoch) / 86400000);
+    // document.getElementById('maya-date').textContent = [
+    //     Math.floor(days / 144000),
+    //     Math.floor((days % 144000) / 7200),
+    //     Math.floor((days % 7200)   / 360),
+    //     Math.floor((days % 360)    / 20),
+    //     days % 20
+    // ].join('.');
 
+    // // ── Tzolkin ──
+    // const tzNames = ['Imix','Ik','Akbal','Kan','Chicchan','Cimi','Manik',
+    //                  'Lamat','Muluc','Oc','Chuen','Eb','Ben','Ix','Men',
+    //                  'Cib','Caban','Etznab','Cauac','Ahau'];
+    // document.getElementById('tzolkin').textContent =
+    //     `${((days % 13) + 13) % 13 + 1} ${tzNames[((days % 20) + 20) % 20]}`;
+
+    // // ── Haab ──
+    // const haabNames = ['Pop','Uo','Zip','Zotz','Tzec','Xul','Yaxkin','Mol',
+    //                    'Chen','Yax','Zac','Ceh','Mac','Kankin','Muan','Pax',
+    //                    'Kayab','Cumku','Uayeb'];
+    // document.getElementById('haab').textContent =
+    //     `${(days % 365) % 20} ${haabNames[Math.floor((days % 365) / 20)] || 'Uayeb'}`;
 }
 
 updateClock();

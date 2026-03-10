@@ -1,91 +1,200 @@
 /* ============================================================
    maya-numerals.css
-   Glifos mayas (0-19) dibujados con CSS puro
+   Optimizado para pantalla 480×320
    ============================================================ */
 
-/* Contenedor del glifo */
+/* ── Contenedor principal del numeral ───────────────────────── */
 .mg {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  gap: 3px;
-  min-width: 36px;
-  min-height: 36px;
+  justify-content: center;
+  gap: 0;
 }
 
-/* Fila de puntos */
+/* ── Glifo individual (0–19) ────────────────────────────────── */
+.mg__glyph {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;           /* separación entre puntos y barras */
+  padding: 6px 4px;
+  min-width: 44px;
+}
+
+/* ── Fila de puntos ─────────────────────────────────────────── */
 .mg__dots {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;           /* separación entre puntos */
 }
 
-/* Punto individual */
+/* ── Punto ──────────────────────────────────────────────────── */
 .mg__dot {
   display: block;
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: var(--accent-jade, #2ecc8f);
-  box-shadow: 0 0 6px rgba(46, 204, 143, 0.6);
+  box-shadow:
+    0 0 4px rgba(46, 204, 143, 0.9),
+    0 0 10px rgba(46, 204, 143, 0.4);
   flex-shrink: 0;
 }
 
-/* Barra horizontal */
+/* ── Barra ──────────────────────────────────────────────────── */
 .mg__bar {
-  width: 100%;
-  min-width: 32px;
-  height: 4px;
-  border-radius: 2px;
+  width: 38px;
+  height: 5px;
+  border-radius: 3px;
   background: var(--accent-jade, #2ecc8f);
-  box-shadow: 0 0 6px rgba(46, 204, 143, 0.4);
+  box-shadow:
+    0 0 4px rgba(46, 204, 143, 0.9),
+    0 0 10px rgba(46, 204, 143, 0.3);
+  /* margen entre barras consecutivas */
+  margin-bottom: 4px;
 }
 
-/* Cero — concha/óvalo */
+.mg__bar:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Cero (concha) ──────────────────────────────────────────── */
 .mg__zero {
-  width: 22px;
-  height: 14px;
+  width: 24px;
+  height: 15px;
   border-radius: 50%;
   border: 3px solid var(--accent-jade, #2ecc8f);
   background: transparent;
-  box-shadow: 0 0 8px rgba(46, 204, 143, 0.4);
+  box-shadow:
+    0 0 6px rgba(46, 204, 143, 0.7),
+    inset 0 0 4px rgba(46, 204, 143, 0.2);
 }
 
-/* ── Tamaños ─────────────────────────────────────────────────
-   Aplica la clase al contenedor padre del glifo, no al .mg
-   ─────────────────────────────────────────────────────────── */
+/* ── Divisor entre glifos apilados ─────────────────────────── */
+.mg__divider {
+  width: 44px;
+  height: 1px;
+  background: rgba(46, 204, 143, 0.25);
+  margin: 4px 0;
+  position: relative;
+}
 
-/* Pequeño — inline, labels */
-.mg-sm .mg__dot  { width: 5px;  height: 5px; }
-.mg-sm .mg__bar  { min-width: 20px; height: 3px; }
-.mg-sm .mg__zero { width: 14px; height: 9px; border-width: 2px; }
-.mg-sm .mg       { min-width: 22px; gap: 2px; }
+.mg__divider::before,
+.mg__divider::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(46, 204, 143, 0.35);
+}
 
-/* Mediano (default) — no necesita clase extra */
+.mg__divider::before { left: 0; }
+.mg__divider::after  { right: 0; }
 
-/* Grande — display principal del reloj */
-.mg-lg .mg__dot  { width: 12px; height: 12px; gap: 6px; }
-.mg-lg .mg__bar  { min-width: 48px; height: 6px; }
-.mg-lg .mg__zero { width: 32px; height: 20px; border-width: 4px; }
-.mg-lg .mg       { min-width: 52px; gap: 5px; }
-.mg-lg .mg__dots { gap: 6px; }
+/* ── Glifo apilado: glifo superior más pequeño ──────────────── */
+.mg--stacked .mg__glyph--top {
+  transform: scale(0.75);
+  transform-origin: center bottom;
+  opacity: 0.85;
+  padding: 2px 4px;
+}
 
-/* Extra grande */
-.mg-xl .mg__dot  { width: 16px; height: 16px; }
-.mg-xl .mg__bar  { min-width: 64px; height: 8px; }
-.mg-xl .mg__zero { width: 42px; height: 26px; border-width: 5px; }
-.mg-xl .mg       { min-width: 68px; gap: 7px; }
-.mg-xl .mg__dots { gap: 8px; }
+.mg--stacked .mg__glyph--bot {
+  padding: 4px 4px 6px;
+}
 
-/* ── Variantes de color ──────────────────────────────────────
-   Sobrescribe el color del acento
-   ─────────────────────────────────────────────────────────── */
+/* ============================================================
+   RELOJ — layout 480×320
+   H · M · S en fila, glifos apilados verticalmente
+   ============================================================ */
+
+.maya-clock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 8px 0;
+}
+
+.maya-clock__digits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Cada columna H / M / S */
+.maya-digit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Caja contenedora del glifo */
+.maya-digit__box {
+  width: 68px;
+  min-height: 110px;
+  background: var(--bg-elevated, #181d22);
+  border: 1px solid rgba(46, 204, 143, 0.25);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 16px rgba(46, 204, 143, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  transition: box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.maya-digit__box::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(46,204,143,0.4), transparent);
+}
+
+/* Label debajo de cada columna */
+.maya-digit__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted, #4a5260);
+  font-family: var(--font-body, sans-serif);
+}
+
+/* Separador · entre H M S */
+.maya-clock__sep {
+  font-size: 1.4rem;
+  color: var(--accent-amber, #e8a020);
+  font-weight: 700;
+  opacity: 0.5;
+  margin-bottom: 18px;    /* compensa el label */
+  animation: sep-blink 1s step-end infinite;
+  user-select: none;
+}
+
+@keyframes sep-blink {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 0.1; }
+}
+
+/* ── Variantes de color ──────────────────────────────────────── */
 .mg-amber .mg__dot,
-.mg-amber .mg__bar  { background: var(--accent-amber, #e8a020); box-shadow: 0 0 6px rgba(232,160,32,0.5); }
-.mg-amber .mg__zero { border-color: var(--accent-amber, #e8a020); box-shadow: 0 0 8px rgba(232,160,32,0.4); }
-
-.mg-red .mg__dot,
-.mg-red .mg__bar    { background: var(--accent-red, #c0392b); box-shadow: 0 0 6px rgba(192,57,43,0.5); }
-.mg-red .mg__zero   { border-color: var(--accent-red, #c0392b); }
+.mg-amber .mg__bar {
+  background: var(--accent-amber, #e8a020);
+  box-shadow: 0 0 4px rgba(232,160,32,0.9), 0 0 10px rgba(232,160,32,0.3);
+}
+.mg-amber .mg__zero {
+  border-color: var(--accent-amber, #e8a020);
+  box-shadow: 0 0 6px rgba(232,160,32,0.7);
+}
