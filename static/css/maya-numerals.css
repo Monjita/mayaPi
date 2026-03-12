@@ -48,8 +48,8 @@
 
 /* ── Barra ──────────────────────────────────────────────────── */
 .mg__bar {
-  width: 50px;
-  height: 5px;
+  width: 53px;
+  height: 6px;
   border-radius: 3px;
   background: var(--accent-jade, #2ecc8f);
   box-shadow:
@@ -72,8 +72,8 @@
 }
 
 .mg__zero-svg {
-  width: 44px;
-  height: 26px;
+  width: 60px;
+  height: 35px;
   color: var(--accent-jade, #2ecc8f);
   filter:
     drop-shadow(0 0 3px rgba(46, 204, 143, 0.9))
@@ -105,9 +105,9 @@
 
 /* ── Glifo apilado: glifo superior más pequeño ──────────────── */
 .mg--stacked .mg__glyph--top {
-  transform: scale(0.95);
+  /* transform: scale(0.95); */
   transform-origin: center bottom;
-  opacity: 0.85;
+  opacity: 0.90;
   padding: 10px 4px;
 }
 
@@ -146,7 +146,7 @@
 
 /* Caja contenedora del glifo */
 .maya-digit__box {
-  width: 68px;
+  width: 80px;
   min-height: 110px;
   background: var(--bg-elevated, #181d22);
   border: 1px solid rgba(46, 204, 143, 0.25);
@@ -182,6 +182,7 @@
 /* Separador · entre H M S */
 .maya-clock__sep {
   font-size: 1.4rem;
+  margin: 0 10px;
   color: var(--accent-amber, #e8a020);
   font-weight: 700;
   opacity: 0.5;
