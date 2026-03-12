@@ -18,10 +18,39 @@
     <!-- ── Navbar ── -->
     <nav class="navbar">
         <a href="{{ url_for('index') }}" class="navbar__brand">
-            <!-- <div class="navbar__brand-icon">
-                <i class="fa-solid fa-circle-nodes"></i>
-            </div> -->
-            Maya<span>Pi</span>
+            <!-- <div class="navbar__brand-icon"> -->
+                <!-- <i class="fa-solid fa-circle-nodes"></i> -->
+            <div style="padding-top: 7px;">
+                <svg class="mg__zero-svg" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 200 120" aria-label="cero maya">
+                <!-- Contorno óvalo -->
+                <ellipse cx="100" cy="60" rx="80" ry="35"
+                    fill="none"
+                    stroke="currentColor" stroke-width="8"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Curva central inferior -->
+                <path d="M20 60 Q100 98 180 60"
+                    fill="none"
+                    stroke="currentColor" stroke-width="6"
+                    stroke-linecap="round"/>
+                <!-- Costilla izquierda -->
+                <path d="M70 29.3 Q55 44.5 70 74"
+                    fill="none"
+                    stroke="currentColor" stroke-width="6"
+                    stroke-linecap="round"/>
+                <!-- Costilla central -->
+                <path d="M100 25 Q85 44.5 100 76"
+                    fill="none"
+                    stroke="currentColor" stroke-width="6"
+                    stroke-linecap="round"/>
+                <!-- Costilla derecha -->
+                <path d="M130 29.3 Q115 44.5 130 74"
+                    fill="none"
+                    stroke="currentColor" stroke-width="6"
+                    stroke-linecap="round"/>
+                </svg>
+            </div>
+            MayaPi
         </a>
 
         <ul class="navbar__nav">
@@ -41,7 +70,8 @@
 
         <div class="navbar__actions">
             <span class="badge badge--jade">
-                <i class="fa-solid fa-circle" style="font-size:0.5rem"></i> Online
+                <i class="fab fa-raspberry-pi fa-2x"></i>
+                <!-- <i class="fa-solid fa-circle" style="font-size:0.5rem"></i> Online -->
             </span>
         </div>
     </nav>

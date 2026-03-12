@@ -42,6 +42,35 @@ const MayaNumerals = (() => {
     if (n === 0) {
       const zero = document.createElement('div');
       zero.className = 'mg__zero';
+      zero.innerHTML = `
+        <svg class="mg__zero-svg" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 200 120" aria-label="cero maya">
+          <!-- Contorno óvalo -->
+          <ellipse cx="100" cy="60" rx="80" ry="35"
+            fill="none"
+            stroke="currentColor" stroke-width="8"
+            stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Curva central inferior -->
+          <path d="M20 60 Q100 98 180 60"
+            fill="none"
+            stroke="currentColor" stroke-width="6"
+            stroke-linecap="round"/>
+          <!-- Costilla izquierda -->
+          <path d="M70 29.3 Q55 44.5 70 74"
+            fill="none"
+            stroke="currentColor" stroke-width="6"
+            stroke-linecap="round"/>
+          <!-- Costilla central -->
+          <path d="M100 25 Q85 44.5 100 76"
+            fill="none"
+            stroke="currentColor" stroke-width="6"
+            stroke-linecap="round"/>
+          <!-- Costilla derecha -->
+          <path d="M130 29.3 Q115 44.5 130 74"
+            fill="none"
+            stroke="currentColor" stroke-width="6"
+            stroke-linecap="round"/>
+        </svg>`;
       el.appendChild(zero);
       return el;
     }
@@ -95,7 +124,7 @@ const MayaNumerals = (() => {
 
       wrapper.classList.add('mg--stacked');
       wrapper.appendChild(top);
-      wrapper.appendChild(divider);
+      // wrapper.appendChild(divider);
       wrapper.appendChild(bot);
     }
 
